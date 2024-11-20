@@ -17,7 +17,7 @@
   <meta name="generator" content="Themefisher Bingo HTML Template v1.0">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('assets/') ?>images/favicon.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('assets/') ?>images/logoo.png" />
 
   <!-- CSS
   ================================================== -->
