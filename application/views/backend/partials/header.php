@@ -67,17 +67,18 @@
 </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Media</span></a>
-            </li>
+            <li class="nav-item <?= ($this->uri->segment(1) == 'media') ? 'active' : ''; ?>">
+    <a class="nav-link" href="<?= base_url('media'); ?>">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Media</span>
+    </a>
+</li>
 
             <!-- Nav Item - Users -->
             <li class="nav-item">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Users</span></a>
+                    <span>Laporan</span></a>
             </li>
 
             <!-- Divider -->

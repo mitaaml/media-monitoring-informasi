@@ -74,33 +74,17 @@ Fixed Navigation
 
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav ml-auto text-center">
-          <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="#">
-              Home
-            </a>
-            
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="about.html">Agenda</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="service.html">Services</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="portfolio.html">Portfolio</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="team.html">Team</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="pricing.html">Pricing</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="contact.html">Contact</a>
-          </li>
-        </li>
+            <li class="nav-item <?= ($this->uri->segment(1) == '' || $this->uri->segment(1) == 'home') ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= base_url('home') ?>">Home</a>
+            </li>
+            <li class="nav-item <?= ($this->uri->segment(1) == 'berita') ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= base_url('berita') ?>">Berita</a>
+            </li>
+            <li class="nav-item <?= ($this->uri->segment(1) == 'kontak') ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= base_url('kontak') ?>">Kontak</a>
+            </li>
         </ul>
-      </div>
+    </div>
     </nav>
     <!-- /main nav -->
   </div>

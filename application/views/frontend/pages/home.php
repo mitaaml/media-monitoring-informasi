@@ -3,11 +3,11 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 text-center">
-					<h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">Dinas Tenaga Kerja <br>
-					Kota Semarang</h1>
-					<p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">Lorem ipsum dolor sit amet,
-						consectetur adipisicing elit. Quod, <br> veritatis tempore nostrum id
-						officia quaerat eum corrupti, <br> ipsa aliquam velit.</p>
+					<h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">Disnaker Kota Semarang</h1>
+					<h3 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">Media Monitoring Informasi</h3>
+					<p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">Dapatkan kemudahan dalam mendapatkan informasi <br>
+					 seputar Disnaker Kota Semarang melalui website,<br>
+					  media sosial dan kanal youtube official kami.</p>
 					<a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn btn-main"
 						href="service.html">Explore Us</a>
 				</div>
