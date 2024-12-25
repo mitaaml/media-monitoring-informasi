@@ -11,10 +11,16 @@
         <h6 class="m-0 font-weight-bold text-primary">Tambah Media</h6>
     </div>
     <div class="card-body">
-    <form action="<?= base_url('media/create'); ?>" method="post">
+    <form action="<?= base_url('media/create'); ?>" method="post" enctype="multipart/form-data">
+
                 <div class="form-group">
                     <label for="nama">Nama</label>
                     <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan nama media" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="judul">Judul</label>
+                    <input type="text" class="form-control" name="judul" id="judul" placeholder="Masukkan judul media" required>
                 </div>
 
                 <div class="form-group">
@@ -23,17 +29,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="jenis">Jenis</label>
-                    <select class="form-control" name="jenis" id="jenis" required>
-                        <option value="">Pilih Jenis</option>
-                        <option value="Lowongan">Lowongan</option>
-                        <option value="Pelatihan">Pelatihan</option>
-                        <option value="Bisnis">Bisnis</option>
-                        <option value="UMKM">UMKM</option>
-                        <option value="Pabrik">Pabrik</option>
-                        <option value="Buruh">Buruh</option>
-                        <option value="PHK">PHK</option>
-                        <option value="Mediasi">Mediasi</option>
+                    <label for="id_kategori">Kategori</label>
+                    <select class="form-control" name="id_kategori" id="id_kategori" required>
+                        <option value="">Pilih Kategori</option>
+                        <?php foreach ($kategori as $kat): ?>
+                            <option value="<?= $kat->id ?>"><?= $kat->nama_kategori ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
 
@@ -45,6 +46,11 @@
                         <option value="belum disetujui">Belum Disetujui</option>
                         <option value="tolak">Tolak</option>
                     </select>
+                </div>
+            
+                <div class="form-group">
+                    <label for="gambar">Upload Gambar</label>
+                    <input type="file" class="form-control-file" name="gambar" id="gambar" accept="image/*" required>
                 </div>
 
                 <div class="form-group">
@@ -58,4 +64,23 @@
     </div>
 </div>
 
+</div>
+<!-- Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Sukses</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Data berhasil disimpan!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="window.location.href='<?= base_url('media'); ?>'">OK</button>
+      </div>
+    </div>
+  </div>
 </div>

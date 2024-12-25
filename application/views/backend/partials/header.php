@@ -59,10 +59,18 @@
             </div>
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item <?= ($this->uri->segment(1) == 'admin') ? 'active' : ''; ?>">
-    <a class="nav-link" href="<?= base_url('admin'); ?>">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'user') ? 'active' : ''; ?>">
+    <a class="nav-link" href="<?= base_url('user'); ?>">
         <i class="fas fa-fw fa-chart-area"></i>
-        <span>Admin</span>
+        <span>User</span>
+    </a>
+</li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item <?= ($this->uri->segment(1) == 'kategori') ? 'active' : ''; ?>">
+    <a class="nav-link" href="<?= base_url('kategori'); ?>">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Kategori</span>
     </a>
 </li>
 
