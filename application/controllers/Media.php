@@ -85,8 +85,11 @@ class Media extends CI_Controller {
 
     public function update_status($id) {
         $status = $this->input->post('status');
+        
+        $this->load->model('MediaModel');
         $this->MediaModel->updateStatus($id, $status);
+    
         $this->session->set_flashdata('success', 'Status berhasil diperbarui.');
         redirect('media');
-    }
+    }    
 }

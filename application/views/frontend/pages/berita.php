@@ -81,7 +81,7 @@
 </section>
 
 <!-- Main Content -->
-<div class="container">
+<div class="container my-5">
     <div class="row">
         <!-- Sidebar Kategori -->
         <div class="col-md-3">
@@ -114,7 +114,8 @@
                 <?php if (!empty($berita)): ?>
                     <?php foreach ($berita as $item): ?>
                         <div class="news-item">
-                            <img src="<?= $item['gambar'] ? $item['gambar'] : 'https://via.placeholder.com/80'; ?>" alt="Thumbnail Berita">
+                            <!-- Cek apakah gambar ada, jika ada gunakan gambar yang disimpan di folder uploads -->
+                            <img src="<?= base_url('uploads/'.($item['gambar'] ?: 'default.jpg')); ?>" alt="Thumbnail Berita">
                             <div>
                                 <h6><a href="<?= $item['url']; ?>"><?= $item['judul']; ?></a></h6>
                                 <p><?= date('D, d/m/Y', strtotime($item['tanggal'])); ?></p>

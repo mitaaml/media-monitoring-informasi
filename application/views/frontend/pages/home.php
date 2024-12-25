@@ -42,65 +42,12 @@
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <canvas id="newsChart" width="400" height="300"></canvas>
+      <div class="col-lg-12">
+	  	<div id="newsChart"></div>
       </div>
     </div>
   </div>
 </section>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  const ctx = document.getElementById('newsChart').getContext('2d');
-  const newsChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Lowongan Kerja', 'Pelatihan', 'Bisnis', 'UMKM', 'Pabrik', 'Buruh', 'PHK', 'Mediasi'],
-      datasets: [{
-        label: 'Jumlah Pencarian',
-        data: [120, 80, 70, 60, 50, 45, 40, 30], // Contoh data jumlah pencarian
-        backgroundColor: [
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(231, 233, 237, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(201, 203, 207, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-          'rgba(75, 192, 192, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(231, 233, 237, 1)',
-          'rgba(255, 99, 132, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(201, 203, 207, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'top',
-        },
-        title: {
-          display: true,
-          text: 'Jenis Berita yang Paling Banyak Dicari'
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-</script>
 
 <!-- Bagian Tentang -->
 <section class="about-2 section" id="tentang">
@@ -182,3 +129,55 @@
 		</div>
 	</div>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    // Data kategori dan jumlah media dari controller
+    var categoryData = <?php echo json_encode($kategori); ?>;
+    
+    // Debugging data kategori dan jumlah media
+    console.log("Category Data: ", categoryData);
+
+    var categoryLabels = categoryData.map(function(item) {
+        return item.nama_kategori; // Nama kategori sebagai label
+    });
+    
+    var categoryCounts = categoryData.map(function(item) {
+        return item.jumlah_media; // Jumlah media per kategori
+    });
+
+    // Debugging label dan count
+    console.log("Category Labels: ", categoryLabels);
+    console.log("Category Counts: ", categoryCounts);
+
+    // Membuat grafik menggunakan ApexCharts
+    var options = {
+        chart: {
+            type: 'bar', // Jenis grafik: bar
+            height: 350,
+        },
+        series: [{
+            name: 'Jumlah Media per Kategori',
+            data: categoryCounts, // Jumlah media per kategori
+        }],
+        xaxis: {
+            categories: categoryLabels, // Nama kategori sebagai label
+        },
+        title: {
+            text: 'Jumlah Media per Kategori',
+            align: 'center'
+        },
+        colors: [
+            '#4BC0C0', '#36A2EB', '#FFCE56', '#E7E9ED', '#FF6384', '#9966FF', '#C9CBCF', '#FF9F40'
+        ],
+        dataLabels: {
+            enabled: false, // Menonaktifkan data labels
+        },
+        grid: {
+            show: true, // Menampilkan grid pada chart
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#newsChart"), options);
+    chart.render(); // Render grafik
+</script>
