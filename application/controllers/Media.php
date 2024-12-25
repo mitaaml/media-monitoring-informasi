@@ -64,6 +64,7 @@ class Media extends CI_Controller {
                     'url' => $this->input->post('url'),
                     'status' => $this->input->post('status'),
                     'deskripsi' => $this->input->post('deskripsi'),
+                    'tanggal' => date('Y-m-d H:i:s'),
                     'gambar' => $upload_data['file_name'],
                     'id_kategori' => $this->input->post('id_kategori')
                 ];
@@ -76,8 +77,8 @@ class Media extends CI_Controller {
         }
     }    
 
-    public function delete($id) {
-        $this->MediaModel->deleteMedia($id);
+    public function delete_media($id) {
+        $this->MediaModel->delete_media($id);
         $this->session->set_flashdata('success', 'Data berhasil dihapus.');
         redirect('media');
     }

@@ -55,7 +55,6 @@
     <!-- Page level custom scripts -->
     <script src="<?= base_url('assets/sbadmin/') ?>js/demo/chart-area-demo.js"></script>
     <script src="<?= base_url('assets/sbadmin/') ?>js/demo/chart-pie-demo.js"></script>
-
 </body>
 
 </html>

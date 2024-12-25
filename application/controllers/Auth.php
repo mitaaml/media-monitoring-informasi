@@ -8,32 +8,32 @@ class Auth extends CI_Controller {
         $this->load->model('Auth_model');
         $this->load->library(['session', 'form_validation']);
         $this->load->helper(['url']);
-
-        if (!$this->session->userdata('logged_in')) {
-            $this->session->set_flashdata('message', 'Silakan login terlebih dahulu!');
-            redirect('auth/login');
-        }
-
-        $userType = $this->session->userdata('user_type');
-        if (!in_array($userType, ['admin', 'pemimpin'])) {
-            $this->session->set_flashdata('message', 'Anda tidak memiliki akses ke halaman ini!');
-            redirect('home');
-        }
     }
 
     // Register function
     public function register() {
+        // Cek jika pengguna sudah login
+        if ($this->session->userdata('logged_in')) {
+            // Jika sudah login, arahkan pengguna ke halaman yang sesuai berdasarkan tipe
+            $userType = $this->session->userdata('user_type');
+            if ($userType === 'admin' || $userType === 'pemimpin') {
+                redirect('dashboard'); // Halaman dashboard
+            } elseif ($userType === 'kompetitor') {
+                redirect('home'); // Halaman home
+            }
+        }
+    
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             // Form validation
             $this->form_validation->set_rules('nama', 'Nama', 'required');
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
             $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
             $this->form_validation->set_rules('password_confirm', 'Konfirmasi Password', 'required|matches[password]');
-
+    
             // Validate kompetitor fields
             $this->form_validation->set_rules('telp', 'Telp', 'required');
             $this->form_validation->set_rules('alamat', 'Alamat', 'required');
-
+    
             if ($this->form_validation->run() == FALSE) {
                 // If validation fails, reload the registration page with error messages
                 $this->load->view('auth/register');
@@ -43,13 +43,13 @@ class Auth extends CI_Controller {
                 $password = $this->input->post('password');
                 $telp = $this->input->post('telp');
                 $alamat = $this->input->post('alamat');
-
+    
                 // Check if email exists
                 if ($this->Auth_model->emailExists($email)) {
                     $this->session->set_flashdata('message', 'Email sudah terdaftar!');
                     redirect('auth/register');
                 }
-
+    
                 // Register user
                 if ($userId = $this->Auth_model->register($email, $password)) {
                     // Lanjutkan proses menyimpan data ke tabel `kompetitor`
@@ -76,9 +76,20 @@ class Auth extends CI_Controller {
         } else {
             $this->load->view('auth/register');
         }
-    }
+    }    
 
     public function login() {
+        // Cek jika pengguna sudah login
+        if ($this->session->userdata('logged_in')) {
+            // Jika sudah login, arahkan pengguna ke halaman yang sesuai berdasarkan tipe
+            $userType = $this->session->userdata('user_type');
+            if ($userType === 'admin' || $userType === 'pemimpin') {
+                redirect('dashboard'); // Halaman dashboard
+            } elseif ($userType === 'kompetitor') {
+                redirect('home'); // Halaman home
+            }
+        }
+    
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             // Validasi form
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
@@ -95,18 +106,24 @@ class Auth extends CI_Controller {
     
                 if ($userId) {
                     // Cari tipe pengguna (admin, pemimpin, atau kompetitor)
-                    $userType = $this->Auth_model->getUserType($userId);
+                    $userData = $this->Auth_model->getUserType($userId);
     
-                    // Simpan data ke sesi
-                    $this->session->set_userdata('logged_in', TRUE);
-                    $this->session->set_userdata('user_id', $userId);
-                    $this->session->set_userdata('user_type', $userType);
+                    if ($userData) {
+                        // Simpan data ke sesi
+                        $this->session->set_userdata('logged_in', TRUE);
+                        $this->session->set_userdata('user_id', $userId);
+                        $this->session->set_userdata('user_type', $userData['type']);
+                        $this->session->set_userdata('user_name', $userData['name']); // Simpan nama pengguna ke session
     
-                    // Arahkan pengguna ke halaman sesuai jenisnya
-                    if ($userType === 'admin' || $userType === 'pemimpin') {
-                        redirect('dashboard'); // Halaman dashboard
-                    } elseif ($userType === 'kompetitor') {
-                        redirect('home'); // Halaman home
+                        // Arahkan pengguna ke halaman sesuai jenisnya
+                        if ($userData['type'] === 'admin' || $userData['type'] === 'pemimpin') {
+                            redirect('dashboard'); // Halaman dashboard
+                        } elseif ($userData['type'] === 'kompetitor') {
+                            redirect('home'); // Halaman home
+                        }
+                    } else {
+                        $this->session->set_flashdata('message', 'Tipe pengguna tidak ditemukan!');
+                        redirect('auth/login');
                     }
                 } else {
                     $this->session->set_flashdata('message', 'Email atau Password salah!');
@@ -116,11 +133,16 @@ class Auth extends CI_Controller {
         } else {
             $this->load->view('auth/login');
         }
-    }      
+    }       
 
-    // Logout function
     public function logout() {
-        $this->session->unset_userdata(['logged_in', 'user_id']);
+        // Hapus data session yang spesifik
+        $this->session->unset_userdata(['logged_in', 'user_id', 'user_type', 'user_name']);
+        
+        // Hancurkan session
+        $this->session->sess_destroy();
+        
+        // Redirect ke halaman login setelah logout
         redirect('auth/login');
-    }
+    }    
 }

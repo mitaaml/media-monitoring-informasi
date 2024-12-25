@@ -58,4 +58,38 @@ class UserModel extends CI_Model {
         $query = $this->db->get('user');
         return $query->row_array(); // Mengembalikan satu baris data
     }
+
+    // Mengambil data pengguna berdasarkan user_id
+    public function getUserById($userId) {
+        $this->db->where('id', $userId);
+        return $this->db->get('user')->row_array();
+    }
+
+    public function getUserProfile($userId) {
+    $this->db->select('user.id as user_id, user.email, admin.nama as admin_nama, admin.telp as admin_telp, pemimpin.nama as pemimpin_nama, pemimpin.telp as pemimpin_telp');
+    $this->db->from('user');
+    $this->db->join('admin', 'admin.id_user = user.id', 'left');
+    $this->db->join('pemimpin', 'pemimpin.id_user = user.id', 'left');
+    $this->db->where('user.id', $userId);
+    $query = $this->db->get();
+    return $query->row_array();
+} 
+
+    // Memperbarui data admin
+    public function updateAdmin($adminId, $data) {
+        $this->db->where('id', $adminId);
+        return $this->db->update('admin', $data);
+    }
+
+    // Memperbarui data pemimpin
+    public function updatePemimpin($pemimpinId, $data) {
+        $this->db->where('id', $pemimpinId);
+        return $this->db->update('pemimpin', $data);
+    }
+
+    public function updateUser($userId, $data) {
+        $this->db->where('id', $userId);
+        return $this->db->update('user', $data);
+    }
+    
 }

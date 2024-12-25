@@ -43,22 +43,53 @@ class Auth_model extends CI_Model {
     public function getUserType($userId) {
         // Periksa di tabel admin
         $this->db->where('id_user', $userId);
-        if ($this->db->get('admin')->num_rows() > 0) {
-            return 'admin';
+        $query = $this->db->get('admin');
+        if ($query->num_rows() > 0) {
+            $user = $query->row();
+            return ['type' => 'admin', 'name' => $user->nama];
         }
     
         // Periksa di tabel pemimpin
         $this->db->where('id_user', $userId);
-        if ($this->db->get('pemimpin')->num_rows() > 0) {
-            return 'pemimpin';
+        $query = $this->db->get('pemimpin');
+        if ($query->num_rows() > 0) {
+            $user = $query->row();
+            return ['type' => 'pemimpin', 'name' => $user->nama];
         }
     
         // Periksa di tabel kompetitor
         $this->db->where('id_user', $userId);
-        if ($this->db->get('kompetitor')->num_rows() > 0) {
-            return 'kompetitor';
+        $query = $this->db->get('kompetitor');
+        if ($query->num_rows() > 0) {
+            $user = $query->row();
+            return ['type' => 'kompetitor', 'name' => $user->nama];
         }
     
         return null; // Jika tidak ditemukan
-    }    
+    }      
+    
+    public function getUserDetails($userId) {
+        // Ambil data dari tabel `user`
+        $this->db->where('id', $userId);
+        $user = $this->db->get('user')->row_array();
+
+        if (!$user) {
+            return null;
+        }
+
+        // Ambil data dari tabel `pemimpin`
+        $this->db->where('id_user', $userId);
+        $pemimpin = $this->db->get('pemimpin')->row_array();
+
+        // Ambil data dari tabel `kompetitor`
+        $this->db->where('id_user', $userId);
+        $kompetitor = $this->db->get('kompetitor')->row_array();
+
+        // Gabungkan data dari semua tabel
+        return [
+            'user' => $user,
+            'pemimpin' => $pemimpin,
+            'kompetitor' => $kompetitor
+        ];
+    }
 }

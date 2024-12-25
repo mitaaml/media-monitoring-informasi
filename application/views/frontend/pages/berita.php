@@ -82,62 +82,51 @@
 
 <!-- Main Content -->
 <div class="container">
-  <div class="row">
-    <!-- Sidebar Kategori -->
-    <div class="col-md-3">
-      <div class="category-section">
-        <div class="card category-card">
-          <div class="card-body">
-            <div class="category-title">Kategori</div>
-            <div class="category-list">
-              <a href="#"><i class="fas fa-folder"></i> Lowongan Kerja</a>
-              <a href="#"><i class="fas fa-folder"></i> Pelatihan</a>
-              <a href="#"><i class="fas fa-folder"></i> Bisnis</a>
-              <a href="#"><i class="fas fa-folder"></i> UMKM</a>
-              <a href="#"><i class="fas fa-folder"></i> Pabrik</a>
-              <a href="#"><i class="fas fa-folder"></i> Buruh</a>
-              <a href="#"><i class="fas fa-folder"></i> PHK</a>
-              <a href="#"><i class="fas fa-folder"></i> Mediasi</a>
+    <div class="row">
+        <!-- Sidebar Kategori -->
+        <div class="col-md-3">
+            <div class="category-section">
+                <div class="card category-card">
+                    <div class="card-body">
+                        <div class="category-title">Kategori</div>
+                        <div class="category-list">
+                            <?php foreach ($kategori as $kat): ?>
+                                <a href="<?= site_url('berita/index/'.$kat['id']); ?>">
+                                    <i class="fas fa-folder"></i> <?= $kat['nama_kategori']; ?>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Konten Berita -->
-    <div class="col-md-9">
-      <!-- Pencarian -->
-      <div class="search-bar d-flex">
-        <input type="text" class="form-control" placeholder="Cari Informasi">
-        <button class="btn btn-warning ml-2">Go!</button>
-      </div>
+        <!-- Konten Berita -->
+        <div class="col-md-9">
+            <!-- Pencarian -->
+            <div class="search-bar d-flex">
+                <input type="text" class="form-control" placeholder="Cari Informasi">
+                <button class="btn btn-warning ml-2">Go!</button>
+            </div>
 
-      <!-- Daftar Berita -->
-      <div class="news-list">
-        <div class="news-item">
-          <img src="https://via.placeholder.com/80" alt="Thumbnail Berita">
-          <div>
-            <h6><a href="https://www.suaramerdeka.com/semarang-raya/0414142242/loker-untuk-lulusan-atau-ahli-bidang-kuliner-dan-perhotelan-penempatan-semarang-cek-cara-melamarnya">Lowongan Kerja di Kota Semarang</a></h6>
-            <p>Minggu, 29/10/2024</p>
-          </div>
+            <!-- Daftar Berita -->
+            <div class="news-list">
+                <?php if (!empty($berita)): ?>
+                    <?php foreach ($berita as $item): ?>
+                        <div class="news-item">
+                            <img src="<?= $item['gambar'] ? $item['gambar'] : 'https://via.placeholder.com/80'; ?>" alt="Thumbnail Berita">
+                            <div>
+                                <h6><a href="<?= $item['url']; ?>"><?= $item['judul']; ?></a></h6>
+                                <p><?= date('D, d/m/Y', strtotime($item['tanggal'])); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No news found for this category.</p>
+                <?php endif; ?>
+            </div>
         </div>
-        <div class="news-item">
-          <img src="https://via.placeholder.com/80" alt="Thumbnail Berita">
-          <div>
-            <h6><a href="#">Jadwal Pelatihan Terbaru</a></h6>
-            <p>Sabtu, 28/10/2024</p>
-          </div>
-        </div>
-        <div class="news-item">
-          <img src="https://via.placeholder.com/80" alt="Thumbnail Berita">
-          <div>
-            <h6><a href="#">Peluang Bisnis di UMKM</a></h6>
-            <p>Jumat, 27/10/2024</p>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
