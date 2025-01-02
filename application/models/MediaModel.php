@@ -77,7 +77,7 @@ class MediaModel extends CI_Model {
     }
 
     public function getMediaBerita() {
-        $this->db->select('id, judul, url, gambar, deskripsi');
+        $this->db->select('id, judul, url, gambar, deskripsi, view');
         $this->db->from('media');
         $this->db->where('status', 'disetujui');
         $this->db->order_by('tanggal', 'DESC');
@@ -86,9 +86,8 @@ class MediaModel extends CI_Model {
         return $query->result_array();
     }
 
-    public function increment_view($id)
-    {
-        $this->db->set('view', 'view+1', FALSE); // Menambah 1 pada view
+    public function increment_view($id) {
+        $this->db->set('view', 'view+1', FALSE);
         $this->db->where('id', $id);
         $this->db->update('media');
     }

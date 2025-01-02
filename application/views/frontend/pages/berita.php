@@ -1,10 +1,4 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f9;
-      margin-top: 30px;
-    }
+<style>
     .search-bar {
       margin-top: 20px;
     }
@@ -60,7 +54,7 @@
       margin-bottom: 20px;
     }
   </style>
-  
+
 <section class="single-page-header">
   <div class="container">
     <div class="row">
