@@ -21,4 +21,15 @@ class Berita_model extends CI_Model {
         $query = $this->db->get();
         return $query->result_array();
     }
+
+    public function search_berita($search_term) {
+        // Mencari berita berdasarkan kata kunci
+        $this->db->select('m.id, m.judul, m.url, m.tanggal, m.gambar');
+        $this->db->from('media m');
+        $this->db->like('m.judul', $search_term); // Mencari berita yang judulnya mengandung kata kunci
+        $this->db->or_like('m.deskripsi', $search_term); // Mencari berita yang deskripsinya mengandung kata kunci
+        $this->db->where('m.status', 'disetujui');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }

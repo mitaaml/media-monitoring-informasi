@@ -65,6 +65,15 @@ class UserModel extends CI_Model {
         return $this->db->get('user')->row_array();
     }
 
+    public function get_user_by_id($id) {
+        $this->db->select('user.*, admin.nama as admin_nama, admin.nip as admin_nip, admin.telp as admin_telp, admin.alamat as admin_alamat, pemimpin.nama as pemimpin_nama, pemimpin.nip as pemimpin_nip, pemimpin.telp as pemimpin_telp, pemimpin.alamat as pemimpin_alamat');
+        $this->db->from('user');
+        $this->db->join('admin', 'admin.id_user = user.id', 'left');
+        $this->db->join('pemimpin', 'pemimpin.id_user = user.id', 'left');
+        $this->db->where('user.id', $id);
+        return $this->db->get()->row_array();
+    }    
+
     public function getUserProfile($userId) {
     $this->db->select('user.id as user_id, user.email, admin.nama as admin_nama, admin.telp as admin_telp, pemimpin.nama as pemimpin_nama, pemimpin.telp as pemimpin_telp');
     $this->db->from('user');

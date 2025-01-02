@@ -81,6 +81,9 @@
                     <li class="nav-item <?= ($this->uri->segment(1) == 'kontak') ? 'active' : '' ?>">
                         <a class="nav-link" href="<?= base_url('kontak') ?>">Kontak</a>
                     </li>
+                    <li class="nav-item <?= ($this->uri->segment(1) == 'kontributor') ? 'active' : '' ?>">
+                        <a class="nav-link" href="<?= base_url('kontributor') ?>">kontributor</a>
+                    </li>
                 </ul>
                 <!-- Button Login -->
                 <a href="<?= base_url('auth/login') ?>" class="btn btn-primary ml-lg-3">Login</a>

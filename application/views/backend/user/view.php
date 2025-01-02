@@ -17,11 +17,12 @@
                     <th>NIP</th>
                     <th>Email</th>
                     <th>Role</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (!empty($users)): ?>
-                    <?php foreach ($users as $user): $no = 1;?>
+                    <?php $no = 1; foreach ($users as $user): ?>
                         <tr>
                             <td><?= $no++; ?></td>
                             <td>
@@ -61,11 +62,19 @@
                                 }
                                 ?>
                             </td>
+                            <td>
+                                <!-- Tombol Edit -->
+                                <a href="<?= base_url('user/edit/' . $user['id']); ?>" class="btn btn-sm btn-warning">Edit</a>
+                                <!-- Tombol Hapus -->
+                                <a href="<?= base_url('user/delete/' . $user['id']); ?>" 
+                                   class="btn btn-sm btn-danger" 
+                                   onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')">Hapus</a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="5" class="text-center">Tidak ada data user.</td>
+                        <td colspan="6" class="text-center">Tidak ada data user.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>

@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Berita Disnaker</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -66,10 +60,7 @@
       margin-bottom: 20px;
     }
   </style>
-</head>
-<body>
-
-<!-- Header Section -->
+  
 <section class="single-page-header">
   <div class="container">
     <div class="row">
@@ -104,10 +95,12 @@
         <!-- Konten Berita -->
         <div class="col-md-9">
             <!-- Pencarian -->
-            <div class="search-bar d-flex">
-                <input type="text" class="form-control" placeholder="Cari Informasi">
-                <button class="btn btn-warning ml-2">Go!</button>
-            </div>
+              <form method="post" action="<?= site_url('berita/index'); ?>">
+                  <div class="search-bar d-flex">
+                    <input type="text" name="search_term" class="form-control" placeholder="Cari Informasi">
+                    <button class="btn btn-warning ml-2">Go!</button>
+                  </div>
+              </form>
 
             <!-- Daftar Berita -->
             <div class="news-list">

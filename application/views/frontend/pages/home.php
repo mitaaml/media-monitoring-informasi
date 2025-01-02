@@ -90,43 +90,28 @@
 			</div>
 		</div>
 		<div class="row">
-			<article class="col-lg-4 col-md-6">
-				<div class="post-item">
-					<div class="media-wrapper">
-						<img loading="lazy" src="<?= base_url('assets/images/about/mediamonitoring.jpg') ?>" alt="Informasi 1" class="img-fluid">
-					</div>
-					<div class="content">
-						<h3><a href="detail-berita.html">Lowongan Kerja Baru</a></h3>
-						<p>Daftar lowongan kerja terbaru di berbagai sektor untuk warga Semarang.</p>
-						<a class="btn btn-main" href="detail-berita.html">Baca Selengkapnya</a>
-					</div>
-				</div>
-			</article>
-			<article class="col-lg-4 col-md-6">
-				<div class="post-item">
-					<div class="media-wrapper">
-						<img loading="lazy" src="<?= base_url('assets/images/about/mediamonitoring.jpg') ?>" alt="Informasi 2" class="img-fluid">
-					</div>
-					<div class="content">
-						<h3><a href="detail-berita.html">Pelatihan Kerja</a></h3>
-						<p>Informasi jadwal pelatihan kerja bagi pencari kerja di Kota Semarang.</p>
-						<a class="btn btn-main" href="detail-berita.html">Baca Selengkapnya</a>
-					</div>
-				</div>
-			</article>
-			<article class="col-lg-4 col-md-6">
-				<div class="post-item">
-					<div class="media-wrapper">
-						<img loading="lazy" src="<?= base_url('assets/images/about/mediamonitoring.jpg') ?>"  alt="Informasi 3" class="img-fluid">
-					</div>
-					<div class="content">
-						<h3><a href="detail-berita.html">Statistik Ketenagakerjaan</a></h3>
-						<p>Data dan analisis terbaru tentang ketenagakerjaan di wilayah Semarang.</p>
-						<a class="btn btn-main" href="detail-berita.html">Baca Selengkapnya</a>
-					</div>
-				</div>
-			</article>
-		</div>
+    <?php if (!empty($artikel)): ?>
+        <?php foreach ($artikel as $item): ?>
+            <article class="col-lg-4 col-md-6">
+                <div class="post-item">
+                    <div class="media-wrapper">
+                        <!-- Gambar artikel -->
+                        <img loading="lazy" src="<?= base_url('uploads/' . ($item['gambar'] ?: 'default.jpg')); ?>" alt="<?= $item['judul']; ?>" class="img-fluid">
+                    </div>
+                    <div class="content">
+                        <!-- Judul artikel -->
+                        <h3><a href="<?= base_url('home/update_view/'.$item['id']); ?>"><?= $item['judul']; ?></a></h3>
+                        <!-- Deskripsi artikel -->
+                        <p><?= substr($item['deskripsi'], 0, 150); ?>...</p> <!-- Tampilkan sebagian deskripsi -->
+                        <a class="btn btn-main" href="<?= base_url('home/update_view/'.$item['id']); ?>">Baca Selengkapnya</a>
+                    </div>
+                </div>
+            </article>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Belum ada informasi terbaru.</p>
+    <?php endif; ?>
+</div>
 	</div>
 </section>
 

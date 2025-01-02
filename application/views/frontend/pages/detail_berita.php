@@ -15,44 +15,26 @@
  <!--Start Contact Us
 	=========================================== -->
  <section class="contact-us" id="contact">
- 	<div class="container">
- 		<div class="row justify-content-center">
-		</div>
- 		<div class="row">
- 			<!-- Contact Details -->
- 			<div class="contact-details col-md-12 ">
- 				<h3 class="mb-3">Sampaikan Informasi Anda Kepada Kami</h3>
- 				<p>Sampaikan informasi anda kepada kami seputar Disnaker Kota Semarang, lowongan kerja, platihan, jobfair dan lainnya.</p>
- 				<ul class="contact-short-info mt-4">
- 					
- 					<li class="mb-3">
- 						<i class="tf-ion-android-phone-portrait"></i>
- 						<span>(024) 8440335</span>
- 					</li>
- 					<li>
- 						<i class="tf-ion-android-mail"></i>
- 						<span>disnaker@semarangkota.co.id</span>
- 					</li>
-					 <li class="mb-3">
- 						<i class="tf-ion-ios-home"></i>
- 						<span>Jl. Ki Mangunsarkoro, No. 21, Kel. Karangkidul,Kec. Semarang Tengah, Kota Semarang.</span>
- 					</li>
- 				</ul>
- 				<!-- Footer Social Links -->
- 				<div class="social-icon">
- 					<ul>
- 						<li><a href="https://www.facebook.com/disnakersmg/"><i class="tf-ion-social-facebook"></i></a></li>
- 						<li><a href="https://x.com/disnakersmg"><i class="tf-ion-social-twitter"></i></a></li>
- 						<li><a href="https://www.instagram.com/disnakersmg/"><i class="tf-ion-social-instagram"></i></a></li>
- 						<li><a href="https://www.youtube.com/disnakersmg"><i class="tf-ion-social-youtube"></i></a></li>
- 					</ul>
- 				</div>
- 				<!--/. End Footer Social Links -->
- 			</div>
- 			<!-- / End Contact Details -->
-
- 		</div> <!-- end row -->
- 	</div> <!-- end container -->
+ <div class="container my-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <!-- Detail Artikel -->
+                <div class="post-item">
+                    <div class="media-wrapper">
+                        <!-- Gambar Artikel -->
+                        <img loading="lazy" src="<?= base_url('uploads/' . ($berita['gambar'] ?: 'default.jpg')); ?>" alt="<?= $berita['judul']; ?>" class="img-fluid">
+                    </div>
+                    <div class="content">
+                        <h1><?= $berita['judul']; ?></h1>
+                        <p><strong>Tanggal:</strong> <?= date('D, d/m/Y', strtotime($berita['tanggal'])); ?></p>
+                        <p><strong>Views:</strong> <?= $berita['view']; ?></p>
+                        <p><?= $berita['deskripsi']; ?></p>
+                    </div>
+                </div>
+                <a href="<?= base_url('berita'); ?>" class="btn btn-primary">Kembali ke Berita</a>
+            </div>
+        </div>
+    </div>
  </section> <!-- end section -->
 
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -10,6 +10,9 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Laporan</h6>
+            <a href="<?= base_url('cetak/laporan'); ?>" class="btn btn-primary">
+                Download Laporan Media
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">

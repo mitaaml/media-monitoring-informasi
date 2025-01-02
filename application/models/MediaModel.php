@@ -9,6 +9,13 @@ class MediaModel extends CI_Model {
         return $this->db->get('media')->result_array();
     }    
 
+    public function getMediaLaporan() {
+        $this->db->select('*');
+        $this->db->from('media');
+        $this->db->order_by('tanggal', 'DESC');
+        return $this->db->get()->result_array();
+    }
+
     public function insert_media($data) {
         return $this->db->insert('media', $data);
     }
@@ -57,5 +64,41 @@ class MediaModel extends CI_Model {
         $this->db->group_by('k.id');
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    public function get_berita_by_id($id) {
+        // Mengambil berita berdasarkan ID
+        $this->db->select('id, judul, url, gambar, deskripsi, tanggal, view');
+        $this->db->from('media');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+
+        return $query->row_array(); // Mengembalikan satu hasil
+    }
+
+    public function getMediaBerita() {
+        $this->db->select('id, judul, url, gambar, deskripsi');
+        $this->db->from('media');
+        $this->db->where('status', 'disetujui');
+        $this->db->order_by('tanggal', 'DESC');
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
+    public function increment_view($id)
+    {
+        $this->db->set('view', 'view+1', FALSE); // Menambah 1 pada view
+        $this->db->where('id', $id);
+        $this->db->update('media');
+    }
+
+    public function get_article_by_id($id) {
+        // Mengambil artikel berdasarkan ID
+        $this->db->select('id, judul, url, gambar, deskripsi, view');
+        $this->db->from('media');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        return $query->row_array();
     }
 }

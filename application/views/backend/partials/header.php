@@ -32,11 +32,12 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon">
-            <i class="fas fa-angry"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">DISNAKER</div>
-    </a>
+    <div class="sidebar-brand-icon">
+        <img src="<?= base_url('assets/images/Untitled design.png'); ?>" alt="Logo DISNAKER" style="width: 50px; height: auto;">
+    </div>
+    <div class="sidebar-brand-text mx-3">DISNAKER</div>
+</a>
+
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
