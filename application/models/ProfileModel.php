@@ -39,8 +39,6 @@ class ProfileModel extends CI_Model
     {
         if ($this->db->where('id_user', $user_id)->get('pemimpin')->row()) {
             return 'pemimpin';
-        } elseif ($this->db->where('id_user', $user_id)->get('mediator')->row()) {
-            return 'mediator';
         } elseif ($this->db->where('id_user', $user_id)->get('admin')->row()) {
             return 'admin';
         }
@@ -55,11 +53,6 @@ class ProfileModel extends CI_Model
     public function update_pemimpin($user_id, $data)
     {
         $this->db->where('id_user', $user_id)->update('pemimpin', $data);
-    }
-
-    public function update_mediator($user_id, $data)
-    {
-        $this->db->where('id_user', $user_id)->update('mediator', $data);
     }
 
     public function update_admin($user_id, $data)
