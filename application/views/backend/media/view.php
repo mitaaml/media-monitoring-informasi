@@ -30,7 +30,7 @@
                     </thead>
                     <tbody>
                         <?php if (!empty($medias)): ?>
-                            <?php 
+                            <?php
                             $no = 1;
                             foreach ($medias as $media): ?>
                                 <tr>

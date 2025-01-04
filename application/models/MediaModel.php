@@ -1,41 +1,58 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class MediaModel extends CI_Model {
+class MediaModel extends CI_Model
+{
 
-    public function getAllMedia() {
+    public function getAllMedia()
+    {
         $this->db->select('media.*, kategori.nama_kategori');
         $this->db->join('kategori', 'kategori.id = media.id_kategori', 'left');
         return $this->db->get('media')->result_array();
-    }    
+    }
 
-    public function getMediaLaporan() {
+    // Di dalam MediaModel
+    public function get_media_by_id($id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->get('media');
+
+        return $query->row_array();
+    }
+
+    public function getMediaLaporan()
+    {
         $this->db->select('*');
         $this->db->from('media');
         $this->db->order_by('tanggal', 'DESC');
         return $this->db->get()->result_array();
     }
 
-    public function insert_media($data) {
+    public function insert_media($data)
+    {
         return $this->db->insert('media', $data);
     }
-    
-    public function get_all_media() {
+
+    public function get_all_media()
+    {
         return $this->db->get('media')->result_array();
     }
 
-    public function delete_media($id) {
+    public function delete_media($id)
+    {
         $this->db->where('id', $id);
         return $this->db->delete('media');
     }
 
-    public function get_total_by_status($status) {
+    public function get_total_by_status($status)
+    {
         $this->db->where('status', $status);
         $this->db->from('media');
         return $this->db->count_all_results();
     }
 
-    public function updateStatus($id, $status) {
+    public function updateStatus($id, $status)
+    {
         $valid_statuses = ['disetujui', 'belum disetujui', 'tolak'];
 
         if (in_array($status, $valid_statuses)) {
@@ -48,7 +65,8 @@ class MediaModel extends CI_Model {
         return false;
     }
 
-    public function get_total_by_category() {
+    public function get_total_by_category()
+    {
         $this->db->select('k.nama_kategori, COUNT(m.id) as total');
         $this->db->from('kategori k');
         $this->db->join('media m', 'k.id = m.id_kategori', 'left');
@@ -57,7 +75,8 @@ class MediaModel extends CI_Model {
         return $query->result_array();
     }
 
-    public function getMediaByCategory() {
+    public function getMediaByCategory()
+    {
         $this->db->select('k.nama_kategori, COUNT(m.id) as jumlah_media');
         $this->db->from('kategori k');
         $this->db->join('media m', 'k.id = m.id_kategori', 'left');
@@ -66,7 +85,8 @@ class MediaModel extends CI_Model {
         return $query->result_array();
     }
 
-    public function get_berita_by_id($id) {
+    public function get_berita_by_id($id)
+    {
         // Mengambil berita berdasarkan ID
         $this->db->select('id, judul, url, gambar, deskripsi, tanggal, view');
         $this->db->from('media');
@@ -76,7 +96,8 @@ class MediaModel extends CI_Model {
         return $query->row_array(); // Mengembalikan satu hasil
     }
 
-    public function getMediaBerita() {
+    public function getMediaBerita()
+    {
         $this->db->select('id, judul, url, gambar, deskripsi, view');
         $this->db->from('media');
         $this->db->where('status', 'disetujui');
@@ -86,18 +107,26 @@ class MediaModel extends CI_Model {
         return $query->result_array();
     }
 
-    public function increment_view($id) {
+    public function increment_view($id)
+    {
         $this->db->set('view', 'view+1', FALSE);
         $this->db->where('id', $id);
         $this->db->update('media');
     }
 
-    public function get_article_by_id($id) {
+    public function get_article_by_id($id)
+    {
         // Mengambil artikel berdasarkan ID
         $this->db->select('id, judul, url, gambar, deskripsi, view');
         $this->db->from('media');
         $this->db->where('id', $id);
         $query = $this->db->get();
         return $query->row_array();
+    }
+
+    public function update_media($id, $media_data)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('media', $media_data);
     }
 }

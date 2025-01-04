@@ -1,68 +1,68 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-<!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Tambah Media</h1>
-<p class="mb-4">Silahkan untuk menambah media</p>
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Tambah Media</h1>
+  <p class="mb-4">Silahkan untuk menambah media</p>
 
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Tambah Media</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Tambah Media</h6>
     </div>
     <div class="card-body">
-    <form action="<?= base_url('media/create'); ?>" method="post" enctype="multipart/form-data">
+      <form action="<?= base_url('media/create'); ?>" method="post" enctype="multipart/form-data">
 
-                <div class="form-group">
-                    <label for="nama">Nama</label>
-                    <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan nama media" required>
-                </div>
+        <div class="form-group">
+          <label for="nama">Nama</label>
+          <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan nama media" required>
+        </div>
 
-                <div class="form-group">
-                    <label for="judul">Judul</label>
-                    <input type="text" class="form-control" name="judul" id="judul" placeholder="Masukkan judul media" required>
-                </div>
+        <div class="form-group">
+          <label for="judul">Judul</label>
+          <input type="text" class="form-control" name="judul" id="judul" placeholder="Masukkan judul media" required>
+        </div>
 
-                <div class="form-group">
-                    <label for="url">URL</label>
-                    <input type="text" class="form-control" name="url" id="url" placeholder="Masukkan URL media" required>
-                </div>
+        <div class="form-group">
+          <label for="url">URL</label>
+          <input type="text" class="form-control" name="url" id="url" placeholder="Masukkan URL media" required>
+        </div>
 
-                <div class="form-group">
-                    <label for="id_kategori">Kategori</label>
-                    <select class="form-control" name="id_kategori" id="id_kategori" required>
-                        <option value="">Pilih Kategori</option>
-                        <?php foreach ($kategori as $kat): ?>
-                            <option value="<?= $kat->id ?>"><?= $kat->nama_kategori ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+        <div class="form-group">
+          <label for="id_kategori">Kategori</label>
+          <select class="form-control" name="id_kategori" id="id_kategori" required>
+            <option value="">Pilih Kategori</option>
+            <?php foreach ($kategori as $kat): ?>
+              <option value="<?= $kat->id ?>"><?= $kat->nama_kategori ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
 
-                <div class="form-group">
-                    <label for="status">Status</label>
-                    <select class="form-control" name="status" id="status" required>
-                        <option value="">Pilih Status</option>
-                        <option value="disetujui">Disetujui</option>
-                        <option value="belum disetujui">Belum Disetujui</option>
-                        <option value="tolak">Tolak</option>
-                    </select>
-                </div>
-            
-                <div class="form-group">
-                    <label for="gambar">Upload Gambar</label>
-                    <input type="file" class="form-control-file" name="gambar" id="gambar" accept="image/*" required>
-                </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select class="form-control" name="status" id="status" required>
+            <option value="">Pilih Status</option>
+            <option value="disetujui">Disetujui</option>
+            <option value="belum disetujui">Belum Disetujui</option>
+            <option value="tolak">Tolak</option>
+          </select>
+        </div>
 
-                <div class="form-group">
-                    <label for="deskripsi">Deskripsi</label>
-                    <textarea class="form-control" name="deskripsi" id="deskripsi" rows="4" placeholder="Masukkan deskripsi media"></textarea>
-                </div>
+        <div class="form-group">
+          <label for="gambar">Upload Gambar</label>
+          <input type="file" class="form-control-file" name="gambar" id="gambar" accept="image/*" required>
+        </div>
 
-                <a href="<?= base_url('media'); ?>" class="btn btn-secondary">Kembali</a>
-                <button type="submit" class="btn btn-primary">Simpan</button>
-            </form>
+        <div class="form-group">
+          <label for="deskripsi">Deskripsi</label>
+          <textarea class="form-control" name="deskripsi" id="deskripsi" rows="4" placeholder="Masukkan deskripsi media"></textarea>
+        </div>
+
+        <a href="<?= base_url('media'); ?>" class="btn btn-secondary">Kembali</a>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </form>
     </div>
-</div>
+  </div>
 
 </div>
 <!-- Modal -->
