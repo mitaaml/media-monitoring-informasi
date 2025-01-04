@@ -22,28 +22,33 @@
             </thead>
             <tbody>
                 <?php if (!empty($users)): ?>
-                    <?php $no = 1; foreach ($users as $user): ?>
+                    <?php $no = 1;
+                    foreach ($users as $user): ?>
                         <tr>
                             <td><?= $no++; ?></td>
                             <td>
-                                <?php 
+                                <?php
                                 // Menampilkan nama admin atau pemimpin berdasarkan data yang ada
                                 if (!empty($user['admin_nama'])) {
-                                    echo $user['admin_nama']; 
+                                    echo $user['admin_nama'];
                                 } elseif (!empty($user['pemimpin_nama'])) {
                                     echo $user['pemimpin_nama'];
+                                } elseif (!empty($user['kompetitor_nama'])) {
+                                    echo $user['kompetitor_nama'];
                                 } else {
                                     echo 'Nama tidak tersedia';
                                 }
                                 ?>
                             </td>
                             <td>
-                                <?php 
+                                <?php
                                 // Menampilkan NIP admin atau pemimpin
                                 if (!empty($user['admin_nip'])) {
-                                    echo $user['admin_nip']; 
+                                    echo $user['admin_nip'];
                                 } elseif (!empty($user['pemimpin_nip'])) {
                                     echo $user['pemimpin_nip'];
+                                } elseif (!empty($user['kompetitor_nip'])) {
+                                    echo $user['kompetitor_nip'];
                                 } else {
                                     echo 'NIP tidak tersedia';
                                 }
@@ -51,7 +56,7 @@
                             </td>
                             <td><?= $user['email']; ?></td>
                             <td>
-                                <?php 
+                                <?php
                                 // Menampilkan role pengguna berdasarkan data yang ada
                                 if (!empty($user['admin_nama'])) {
                                     echo 'Admin';
@@ -66,9 +71,9 @@
                                 <!-- Tombol Edit -->
                                 <a href="<?= base_url('user/edit/' . $user['id']); ?>" class="btn btn-sm btn-warning">Edit</a>
                                 <!-- Tombol Hapus -->
-                                <a href="<?= base_url('user/delete/' . $user['id']); ?>" 
-                                   class="btn btn-sm btn-danger" 
-                                   onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')">Hapus</a>
+                                <a href="<?= base_url('user/delete/' . $user['id']); ?>"
+                                    class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')">Hapus</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

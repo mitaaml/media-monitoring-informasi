@@ -1,9 +1,11 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class User extends CI_Controller {
+class User extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->load->database();
         $this->load->model('UserModel');
@@ -21,7 +23,8 @@ class User extends CI_Controller {
     }
 
     // Method untuk menampilkan halaman dengan data user
-    public function index() {
+    public function index()
+    {
         $data['title'] = 'Data User';
         $data['users'] = $this->UserModel->getAllUser();
 
@@ -32,7 +35,8 @@ class User extends CI_Controller {
     }
 
     // Method untuk menambah user
-    public function create() {
+    public function create()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $this->input->post('email');
             $password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
@@ -85,48 +89,88 @@ class User extends CI_Controller {
     }
 
     // Method untuk mengedit user
-    public function edit($id) {
+    public function edit($id)
+    {
         $data['user'] = $this->UserModel->getUserById($id);
-        
-        // Jika user tidak ditemukan
+
         if (empty($data['user'])) {
             show_404();
         }
 
-        // Validasi form input
+        // Set validasi form input
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'min_length[6]'); // Password opsional
 
         if ($this->form_validation->run() == FALSE) {
-            $data['title'] = 'Edit User';
             $this->load->view('backend/partials/header', $data);
             $this->load->view('backend/user/edit', $data);
             $this->load->view('backend/partials/footer');
         } else {
             // Ambil data dari input form
+            $email = $this->input->post('email');
+            $password = $this->input->post('password'); // Password opsional
+            $role = $this->input->post('role');
+            $nama = $this->input->post('nama');
+            $nip = $this->input->post('nip');
+            $telp = $this->input->post('telp');
+            $alamat = $this->input->post('alamat');
+
+            log_message('debug', 'Role: ' . $role);
+
+            // Update data user
             $userData = [
-                'email' => $this->input->post('email'),
-                'password' => $this->input->post('password') ? password_hash($this->input->post('password'), PASSWORD_DEFAULT) : $data['user']['password'] // Update password hanya jika diubah
+                'email' => $email,
             ];
 
-            // Update data user di database
+            // Hanya update password jika diubah
+            if (!empty($password)) {
+                $userData['password'] = password_hash($password, PASSWORD_DEFAULT);
+            }
+
+            // Update tabel user
             $this->UserModel->updateUser($id, $userData);
+
+            // Update data tambahan berdasarkan role
+            if ($role == 'admin') {
+                $adminData = [
+                    'nama' => $nama,
+                    'nip' => $nip,
+                    'telp' => $telp,
+                    'alamat' => $alamat,
+                ];
+                $this->db->where('id_user', $id)->update('admin', $adminData);
+            } elseif ($role == 'pemimpin') {
+                $pemimpinData = [
+                    'nama' => $nama,
+                    'nip' => $nip,
+                    'telp' => $telp,
+                    'alamat' => $alamat,
+                ];
+                $this->db->where('id_user', $id)->update('pemimpin', $pemimpinData);
+            } elseif ($role == 'kompetitor') {
+                $kompetitorData = [
+                    'nama' => $nama,
+                    'telp' => $telp,
+                    'alamat' => $alamat,
+                ];
+                $this->db->where('id_user', $id)->update('kompetitor', $kompetitorData);
+            }
+
+            // Set pesan sukses dan redirect
             $this->session->set_flashdata('success', 'User berhasil diperbarui');
             redirect('user');
         }
     }
 
-    // Method untuk menghapus user
-    public function delete($id) {
-        // Cek apakah data user ada
-        if ($this->UserModel->getUserById($id)) {
-            // Hapus data user
-            $this->UserModel->deleteUser($id);
-            $this->session->set_flashdata('success', 'User berhasil dihapus');
-        } else {
-            $this->session->set_flashdata('error', 'User tidak ditemukan');
-        }
+    public function delete($id)
+    {
+        $this->load->model('UserModel');
 
+        // Hapus user
+        $this->UserModel->deleteUser($id);
+
+        // Set flashdata dan redirect
+        $this->session->set_flashdata('message', 'User berhasil dihapus');
         redirect('user');
     }
 }
