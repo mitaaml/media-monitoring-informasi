@@ -129,4 +129,40 @@ class MediaModel extends CI_Model
         $this->db->where('id', $id);
         return $this->db->update('media', $media_data);
     }
+
+    public function get_article($id)
+    {
+        return $this->db->get_where('media', ['id' => $id])->row_array();
+    }
+
+    public function getMediaByWeek()
+    {
+        $this->db->where('YEARWEEK(tanggal, 1) = YEARWEEK(CURDATE(), 1)');
+        $query = $this->db->get('media');
+        return $query->result();
+    }
+
+    public function getMediaByMonth()
+    {
+        $this->db->where('YEAR(tanggal) = YEAR(CURDATE())');
+        $this->db->where('MONTH(tanggal) = MONTH(CURDATE())');
+        $query = $this->db->get('media');
+        return $query->result();
+    }
+
+    public function getMediaByYear()
+    {
+        $this->db->where('YEAR(tanggal) = YEAR(CURDATE())');
+        $query = $this->db->get('media');
+        return $query->result();
+    }
+
+    public function getMediaByDateRange($start_date, $end_date)
+{
+    $this->db->where('tanggal >=', $start_date);
+    $this->db->where('tanggal <=', $end_date);
+    $query = $this->db->get('media');
+    return $query->result();
+}
+
 }
