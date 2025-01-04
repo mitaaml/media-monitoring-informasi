@@ -134,18 +134,22 @@ class UserModel extends CI_Model
         return $query->row_array();
     }
 
-    // Memperbarui data admin
     public function updateAdmin($adminId, $data)
     {
-        $this->db->where('id', $adminId);
-        return $this->db->update('admin', $data);
+        log_message('debug', 'Update Admin with ID: ' . $adminId . ' Data: ' . print_r($data, true));
+        $this->db->where('id_user', $adminId); // Update menggunakan id_user
+        $result = $this->db->update('admin', $data);
+        log_message('debug', 'Admin update result: ' . ($result ? 'Success' : 'Failed'));
+        return $result;
     }
 
-    // Memperbarui data pemimpin
     public function updatePemimpin($pemimpinId, $data)
     {
-        $this->db->where('id', $pemimpinId);
-        return $this->db->update('pemimpin', $data);
+        log_message('debug', 'Update Pemimpin with ID: ' . $pemimpinId . ' Data: ' . print_r($data, true));
+        $this->db->where('id_user', $pemimpinId); // Update menggunakan id_user
+        $result = $this->db->update('pemimpin', $data);
+        log_message('debug', 'Pemimpin update result: ' . ($result ? 'Success' : 'Failed'));
+        return $result;
     }
 
     public function updateUser($userId, $data)
