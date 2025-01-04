@@ -1,45 +1,58 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title><?= $title; ?></title>
     <style>
         /* Styling untuk kop surat */
-        .kop-surat {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .kop-surat .logo {
-            width: 80px; /* Ukuran logo */
-            height: auto;
-        }
-
-        .kop-surat .header-info {
+        .header {
             text-align: center;
-            font-size: 18px;
+        }
+
+        .header::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .header img,
+        .header .text-container {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .header img {
+            max-height: 80px;
+            margin-right: 20px;
+        }
+
+        .sub-header {
+            text-align: center;
             font-weight: bold;
         }
 
-        .kop-surat .header-info p {
-            margin: 0;
+        .no-border td {
+            border: none;
+            padding: 5px;
         }
 
-        /* Styling untuk tabel */
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        table, th, td {
+
+        table,
+        th,
+        td {
             border: 1px solid black;
         }
-        th, td {
+
+        th,
+        td {
             padding: 8px;
             text-align: left;
         }
 
-        /* Styling untuk judul */
         h1 {
             text-align: center;
             font-size: 24px;
@@ -47,19 +60,32 @@
         }
     </style>
 </head>
-<body>
 
-    <!-- Kop Surat -->
-    <div class="kop-surat">
-    <img src="<?= base_url('assets/images/logodisnaker.png'); ?>" alt="Logo" class="logo">
-    <!-- Ganti path dengan path logo Anda -->
-        <div class="header-info">
-            <p>PEMERINTAH KOTA SEMARANG</p>
-            <h1>DINAS TENAGA KERJA</h1>
-            <p>Jalan Ki Mangunsarkoro Nomor 21, Karangkidul, Semarang Tengah 50136</p>
-            <p>Telepon: (024) 8440335, 8440339 | Email: disnaker.semarangkota.go.id</p>
-            
-        </div>
+<body>
+    <div class="header">
+        <table style="width: 100%;" style="border: none;">
+            <tr style="border: none;">
+                <td style="width: 10%; border: none;">
+                    <?php
+                    $path = base_url('assets/images/logodisnaker.png');
+                    $type = pathinfo($path, PATHINFO_EXTENSION);
+                    if (!isset($base64)) {
+                        $data = file_get_contents($path);
+                        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                    }
+                    ?>
+                    <img src="<?= $base64 ?>" alt="Logo" />
+                </td style="border: none;">
+                <td style="text-align: center; border: none;">
+                    <h3 style="font-size: 20px; margin: 0;">
+                        PEMERINTAH KOTA SEMARANG <br>
+                        DINAS TENAGA KERJA
+                    </h3>
+                    Jalan Ki Mangunsarkoro Nomor 21, Karangkidul, Semarang Tengah 50136 <br>
+                    Telepon: (024) 8440335, 8440339 | Email: disnaker.semarangkota.go.id
+                </td>
+            </tr>
+        </table>
     </div>
 
     <!-- Judul Laporan -->
@@ -95,4 +121,5 @@
         </tbody>
     </table>
 </body>
+
 </html>
