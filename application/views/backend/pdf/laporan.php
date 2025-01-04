@@ -88,15 +88,14 @@
         </table>
     </div>
 
-    <!-- Judul Laporan -->
     <h1><?= $title; ?></h1>
 
-    <!-- Tabel Laporan -->
     <table>
         <thead>
             <tr>
                 <th>No</th>
                 <th>Nama</th>
+                <th>Gambar</th>
                 <th>URL</th>
                 <th>Status</th>
                 <th>Tanggal</th>
@@ -108,6 +107,15 @@
                     <tr>
                         <td><?= $index + 1; ?></td>
                         <td><?= $item['nama']; ?></td>
+                        <td>
+                            <?php
+                            $path_media = base_url('uploads/' . $item['gambar']);
+                            $gambar = pathinfo($path_media, PATHINFO_EXTENSION);
+                            $data = file_get_contents($path_media);
+                            $base64 = 'data:image/' . $gambar . ';base64,' . base64_encode($data);
+                            ?>
+                            <img src="<?= $base64 ?>" alt="Gambar <?= $item['nama']; ?>" style="max-width: 100px; max-height: 80px;" />
+                        </td>
                         <td><?= $item['url']; ?></td>
                         <td><?= $item['status']; ?></td>
                         <td><?= $item['tanggal']; ?></td>
