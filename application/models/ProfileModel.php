@@ -19,16 +19,8 @@ class ProfileModel extends CI_Model
         return $query->row_array();
     }
 
-    // Ambil data mediator berdasarkan user_id
-    public function get_mediator_by_user_id($id_user)
-    {
-        $this->db->where('id_user', $id_user);
-        $query = $this->db->get('admin');
-        return $query->row_array();
-    }
-
-    // Ambil data pelapor berdasarkan user_id
-    public function get_pelapor_by_user_id($id_user)
+    // Ambil data pemimpin berdasarkan user_id
+    public function get_pemimpin_by_user_id($id_user)
     {
         $this->db->where('id_user', $id_user);
         $query = $this->db->get('pemimpin');
@@ -45,8 +37,8 @@ class ProfileModel extends CI_Model
 
     public function get_user_role($user_id)
     {
-        if ($this->db->where('id_user', $user_id)->get('pelapor')->row()) {
-            return 'pelapor';
+        if ($this->db->where('id_user', $user_id)->get('pemimpin')->row()) {
+            return 'pemimpin';
         } elseif ($this->db->where('id_user', $user_id)->get('mediator')->row()) {
             return 'mediator';
         } elseif ($this->db->where('id_user', $user_id)->get('admin')->row()) {
@@ -60,9 +52,9 @@ class ProfileModel extends CI_Model
         $this->db->where('id', $user_id)->update('user', $data);
     }
 
-    public function update_pelapor($user_id, $data)
+    public function update_pemimpin($user_id, $data)
     {
-        $this->db->where('id_user', $user_id)->update('pelapor', $data);
+        $this->db->where('id_user', $user_id)->update('pemimpin', $data);
     }
 
     public function update_mediator($user_id, $data)

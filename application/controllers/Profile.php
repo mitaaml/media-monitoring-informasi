@@ -35,19 +35,16 @@ class Profile extends CI_Controller
             show_error('User tidak ditemukan.');
         }
 
-        // Cek data di tabel terkait (admin, mediator, pelapor)
+        // Cek data di tabel terkait (admin, mediator, pemimpin)
         $adminData = $this->Profilemodel->get_admin_by_user_id($userId);
-        $mediatorData = $this->Profilemodel->get_mediator_by_user_id($userId);
-        $pelaporData = $this->Profilemodel->get_pelapor_by_user_id($userId);
+        $pemimpinData = $this->Profilemodel->get_pemimpin_by_user_id($userId);
 
         // Tentukan data profil berdasarkan role
         $userDetails = [];
         if ($adminData) {
             $userDetails = $adminData;
-        } elseif ($mediatorData) {
-            $userDetails = $mediatorData;
-        } elseif ($pelaporData) {
-            $userDetails = $pelaporData;
+        } elseif ($pemimpinData) {
+            $userDetails = $pemimpinData;
         }
 
         $data = [
@@ -117,11 +114,8 @@ class Profile extends CI_Controller
         ];
 
         switch ($role) {
-            case 'pelapor':
-                $this->Profilemodel->update_pelapor($user_id, $data_role);
-                break;
-            case 'mediator':
-                $this->Profilemodel->update_mediator($user_id, $data_role);
+            case 'pemimpin':
+                $this->Profilemodel->update_pemimpin($user_id, $data_role);
                 break;
             case 'admin':
                 $this->Profilemodel->update_admin($user_id, $data_role);
@@ -151,19 +145,16 @@ class Profile extends CI_Controller
             show_error('User tidak ditemukan.');
         }
 
-        // Cek data di tabel terkait (admin, mediator, pelapor)
+        // Cek data di tabel terkait (admin, mediator, pemimpin)
         $adminData = $this->Profilemodel->get_admin_by_user_id($userId);
-        $mediatorData = $this->Profilemodel->get_mediator_by_user_id($userId);
-        $pelaporData = $this->Profilemodel->get_pelapor_by_user_id($userId);
+        $pemimpinData = $this->Profilemodel->get_pemimpin_by_user_id($userId);
 
         // Tentukan data profil berdasarkan role
         $userDetails = [];
         if ($adminData) {
             $userDetails = $adminData;
-        } elseif ($mediatorData) {
-            $userDetails = $mediatorData;
-        } elseif ($pelaporData) {
-            $userDetails = $pelaporData;
+        } elseif ($pemimpinData) {
+            $userDetails = $pemimpinData;
         }
 
         $data = [
