@@ -11,6 +11,14 @@
       <h6 class="m-0 font-weight-bold text-primary">Tambah Media</h6>
     </div>
     <div class="card-body">
+    <?php if ($this->session->flashdata('error')): ?>
+    <div class="alert alert-danger"><?= $this->session->flashdata('error'); ?></div>
+<?php endif; ?>
+
+<?php if ($this->session->flashdata('success')): ?>
+    <div class="alert alert-success"><?= $this->session->flashdata('success'); ?></div>
+<?php endif; ?>
+
       <form action="<?= base_url('media/create'); ?>" method="post" enctype="multipart/form-data">
 
         <div class="form-group">

@@ -100,11 +100,11 @@
                     </div>
                     <div class="content">
                         <!-- Judul artikel -->
-                        <h3><a href="<?= base_url('home/update_view/'.$item['id']); ?>"><?= $item['judul']; ?></a></h3>
+                        <h3><?= $item['judul']; ?></h3>
                         <!-- Deskripsi artikel -->
-                        <p>view : <?= $item['view']; ?></p> <!-- Tampilkan sebagian deskripsi -->
-                        <p><?= substr($item['deskripsi'], 0, 150); ?>...</p> <!-- Tampilkan sebagian deskripsi -->
-                        <a class="btn btn-main" href="<?= base_url('home/update_view/'.$item['id']); ?>">Baca Selengkapnya</a>
+                        <p>view : <?= $item['view']; ?></p>
+                        <p><?= substr($item['deskripsi'], 0, 150); ?>...</p>
+                        <a class="btn btn-main" href="<?= base_url('home/update_view/' . $item['id']); ?>" target="_blank">Baca Selengkapnya</a>
                     </div>
                 </div>
             </article>

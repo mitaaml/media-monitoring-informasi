@@ -18,15 +18,21 @@ class Home extends CI_Controller {
         $this->load->view('frontend/partials/footer');
     }
 
-    // Fungsi untuk memperbarui jumlah view
     public function update_view($id)
     {
         $this->load->model('MediaModel');
         
-        // Memperbarui jumlah view pada artikel
+        // Memperbarui jumlah view
         $this->MediaModel->increment_view($id);
-
-        // Redirect ke halaman detail artikel
-        redirect('berita/detail/' . $id);
+        
+        // Ambil URL artikel berdasarkan ID
+        $article = $this->MediaModel->get_article($id);
+        
+        // Redirect ke URL artikel jika ditemukan, atau tampilkan 404 jika tidak ditemukan
+        if ($article && isset($article['url'])) {
+            redirect($article['url'], 'refresh');
+        } else {
+            show_404();
+        }
     }
 }

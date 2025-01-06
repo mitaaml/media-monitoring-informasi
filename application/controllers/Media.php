@@ -36,48 +36,70 @@ class Media extends CI_Controller
     public function create()
     {
         // Set validasi form
-        $this->form_validation->set_rules('nama', 'Nama', 'required');
-        $this->form_validation->set_rules('judul', 'Judul', 'required');
-        $this->form_validation->set_rules('url', 'URL', 'required|valid_url');
-        $this->form_validation->set_rules('status', 'Status', 'required');
+        $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
+        $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
+        $this->form_validation->set_rules('url', 'URL', 'required|valid_url|trim');
+        $this->form_validation->set_rules('status', 'Status', 'required|trim');
         $this->form_validation->set_rules('id_kategori', 'Kategori', 'required');
 
         // Ambil data kategori dari database
+        $data['title'] = 'Tambah Media';
         $data['kategori'] = $this->db->get('kategori')->result();
 
-        // Jika validasi gagal, kirim data kategori ke view
+        // Jika validasi gagal
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('media_add', $data);
+            $this->session->set_flashdata('error', validation_errors());
+            $this->load->view('backend/partials/header', $data);
+            $this->load->view('backend/media/add', $data);
+            $this->load->view('backend/partials/footer');
         } else {
             // Konfigurasi upload gambar
             $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['max_size'] = 2048;
+            $config['max_size'] = 2048; // 2MB
+            $config['encrypt_name'] = TRUE;
 
             $this->load->library('upload', $config);
 
+            // Memulai transaksi
+            $this->db->trans_start();
+
             if (!$this->upload->do_upload('gambar')) {
                 // Menampilkan error upload jika gagal
-                $data['error'] = $this->upload->display_errors();
-                $this->load->view('media_add', $data);
+                $this->db->trans_complete();
+                $this->session->set_flashdata('error', $this->upload->display_errors());
+                redirect('media/add');
             } else {
                 $upload_data = $this->upload->data();
                 // Menyimpan data media ke dalam array
                 $media_data = [
-                    'nama' => $this->input->post('nama'),
-                    'judul' => $this->input->post('judul'),
-                    'url' => $this->input->post('url'),
-                    'status' => $this->input->post('status'),
-                    'deskripsi' => $this->input->post('deskripsi'),
+                    'nama' => $this->input->post('nama', TRUE),
+                    'judul' => $this->input->post('judul', TRUE),
+                    'url' => $this->input->post('url', TRUE),
+                    'status' => $this->input->post('status', TRUE),
+                    'deskripsi' => $this->input->post('deskripsi', TRUE),
                     'tanggal' => date('Y-m-d H:i:s'),
                     'gambar' => $upload_data['file_name'],
-                    'id_kategori' => $this->input->post('id_kategori')
+                    'id_kategori' => $this->input->post('id_kategori', TRUE)
                 ];
+
+                log_message('debug', 'Data yang dikirim ke model: ' . print_r($media_data, TRUE));
 
                 // Insert data ke model
                 $this->MediaModel->insert_media($media_data);
-                $this->session->set_flashdata('success', 'Data berhasil disimpan.');
-                redirect('media');
+
+                // Menyelesaikan transaksi
+                $this->db->trans_complete();
+
+                if ($this->db->trans_status() === FALSE) {
+                    // Jika transaksi gagal
+                    $this->session->set_flashdata('error', 'Terjadi kesalahan saat menyimpan data.');
+                    redirect('media/add');
+                } else {
+                    // Jika berhasil
+                    $this->session->set_flashdata('success', 'Data berhasil disimpan.');
+                    redirect('media');
+                }
             }
         }
     }
