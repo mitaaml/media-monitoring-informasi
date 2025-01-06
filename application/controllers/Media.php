@@ -93,7 +93,7 @@ class Media extends CI_Controller
 
         // Ambil data kategori dan data media berdasarkan ID
         $data['kategori'] = $this->db->get('kategori')->result();
-        $data['media'] = $this->MediaModel->get_media_by_id($id);  // Ganti dengan model untuk mengambil data berdasarkan ID
+        $data['media'] = $this->MediaModel->get_media_by_id($id);
 
 
         if (empty($data['media'])) {
@@ -132,7 +132,6 @@ class Media extends CI_Controller
                     }
                 }
             } else {
-                // Jika tidak ada gambar yang diupload, gunakan gambar lama
                 $gambar = $data['media']['gambar'];
             }
 
