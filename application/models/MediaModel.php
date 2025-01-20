@@ -158,11 +158,46 @@ class MediaModel extends CI_Model
     }
 
     public function getMediaByDateRange($start_date, $end_date)
-{
-    $this->db->where('tanggal >=', $start_date);
-    $this->db->where('tanggal <=', $end_date);
-    $query = $this->db->get('media');
-    return $query->result();
-}
+    {
+        $this->db->where('tanggal >=', $start_date);
+        $this->db->where('tanggal <=', $end_date);
+        $query = $this->db->get('media');
+        return $query->result();
+    }
+    
+    // Fungsi untuk mengambil data berdasarkan bulan
+    public function get_media_by_month($bulan)
+    {
+        $this->db->select('*');
+        $this->db->from('media');
+        $this->db->where('MONTH(tanggal)', $bulan);
+        $query = $this->db->get();
 
+        if ($query->num_rows() > 0) {
+            return $query->result_array(); // Mengembalikan hasil sebagai array
+        } else {
+            return []; // Tidak ada data
+        }
+    }
+
+    // Fungsi untuk mengambil nama bulan berdasarkan angka bulan
+    public function get_month_name($bulan)
+    {
+        $bulan_names = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        ];
+
+        return $bulan_names[$bulan] ?? null;
+    }
 }
