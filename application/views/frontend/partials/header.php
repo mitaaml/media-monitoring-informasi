@@ -33,8 +33,10 @@
 
   <style>
     .logo img {
-      width: 50px; /* Ukuran logo diperkecil */
-      height: auto; /* Pertahankan proporsi logo */
+      width: 50px;
+      /* Ukuran logo diperkecil */
+      height: auto;
+      /* Pertahankan proporsi logo */
     }
   </style>
 
@@ -58,42 +60,101 @@
   <!-- Fixed Navigation -->
   <header class="navigation fixed-top">
     <div class="container">
-        <!-- main nav -->
-        <nav class="navbar navbar-expand-lg navbar-light px-0">
-            <!-- logo -->
-            <a class="navbar-brand logo" href="index.html">
-                <img loading="lazy" class="logo-default" src="<?= base_url('assets/') ?>images/favicon.ico" alt="logo" />
-                <img loading="lazy" class="logo-white" src="<?= base_url('assets/') ?>images/favicon.ico" alt="logo" />
-            </a>
-            <!-- /logo -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+      <!-- main nav -->
+      <nav class="navbar navbar-expand-lg navbar-light px-0">
+        <!-- logo -->
+        <a class="navbar-brand logo" href="index.html">
+          <img loading="lazy" class="logo-default" src="<?= base_url('assets/') ?>images/favicon.ico" alt="logo" />
+          <img loading="lazy" class="logo-white" src="<?= base_url('assets/') ?>images/favicon.ico" alt="logo" />
+        </a>
+        <!-- /logo -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse" id="navigation">
-                <ul class="navbar-nav ml-auto text-center">
-                    <li class="nav-item <?= ($this->uri->segment(1) == '' || $this->uri->segment(1) == 'home') ? 'active' : '' ?>">
-                        <a class="nav-link" href="<?= base_url('home') ?>">Home</a>
+        <div class="collapse navbar-collapse" id="navigation">
+          <ul class="navbar-nav ml-auto">
+            <!-- Menu Home -->
+            <li class="nav-item <?= ($this->uri->segment(1) == '' || $this->uri->segment(1) == 'home') ? 'active' : '' ?>">
+              <a class="nav-link" href="<?= base_url('home') ?>">Home</a>
+            </li>
+            <!-- Menu Berita -->
+            <li class="nav-item <?= ($this->uri->segment(1) == 'berita') ? 'active' : '' ?>">
+              <a class="nav-link" href="<?= base_url('berita') ?>">Berita</a>
+            </li>
+            <!-- Menu Kontak -->
+            <li class="nav-item <?= ($this->uri->segment(1) == 'kontak') ? 'active' : '' ?>">
+              <a class="nav-link" href="<?= base_url('kontak') ?>">Kontak</a>
+            </li>
+            <!-- Menu Kontributor -->
+            <li class="nav-item <?= ($this->uri->segment(1) == 'kontributor') ? 'active' : '' ?>">
+              <a class="nav-link" href="<?= base_url('kontributor') ?>">Kontributor</a>
+            </li>
+          </ul>
+
+          <!-- Nav Item - Login/Profile -->
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <?php if ($this->session->userdata('logged_in')): ?>
+                <!-- Jika User Sudah Login -->
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <?= $this->session->userdata('user_name'); ?>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="<?= base_url('profile/profile'); ?>">Profile</a></li>
+                    <li><button class="dropdown-item" type="button" data-toggle="modal" data-target="#logoutModal">
+                        Logout
+                      </button>
                     </li>
-                    <li class="nav-item <?= ($this->uri->segment(1) == 'berita') ? 'active' : '' ?>">
-                        <a class="nav-link" href="<?= base_url('berita') ?>">Berita</a>
-                    </li>
-                    <li class="nav-item <?= ($this->uri->segment(1) == 'kontak') ? 'active' : '' ?>">
-                        <a class="nav-link" href="<?= base_url('kontak') ?>">Kontak</a>
-                    </li>
-                    <li class="nav-item <?= ($this->uri->segment(1) == 'kontributor') ? 'active' : '' ?>">
-                        <a class="nav-link" href="<?= base_url('kontributor') ?>">kontributor</a>
-                    </li>
-                </ul>
-                <!-- Button Login -->
-                <a href="<?= base_url('auth/login') ?>" class="btn btn-primary ml-lg-3">Login</a>
-            </div>
-        </nav>
-        <!-- /main nav -->
+                  </ul>
+                </div>
+              <?php else: ?>
+                <!-- Jika User Belum Login -->
+                <button class="btn btn-primary" onclick="window.location.href='<?= base_url('auth/login'); ?>'">
+                  Login
+                </button>
+              <?php endif; ?>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- /main nav -->
     </div>
-</header>
+  </header>
   <!-- End Fixed Navigation -->
+  <!-- Modal Logout -->
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
+  <!-- Popper.js (Bootstrap's JS relies on this) -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <!-- Header Modal -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- Body Modal -->
+        <div class="modal-body">
+          Apakah Anda yakin ingin logout?
+        </div>
+        <!-- Footer Modal -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <a class="btn btn-danger" href="<?= base_url('auth/logout'); ?>">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
