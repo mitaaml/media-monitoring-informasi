@@ -11,6 +11,26 @@
             </a>
         </div>
         <div class="card-body">
+            <form method="GET" action="<?= base_url('laporan/index'); ?>">
+                <div class="form-group">
+                    <label for="bulan">Pilih Bulan</label>
+                    <select class="form-control" name="bulan" id="bulan">
+                        <option value="1" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 1) ? 'selected' : ''; ?>>Januari</option>
+                        <option value="2" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 2) ? 'selected' : ''; ?>>Februari</option>
+                        <option value="3" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 3) ? 'selected' : ''; ?>>Maret</option>
+                        <option value="4" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 4) ? 'selected' : ''; ?>>April</option>
+                        <option value="5" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 5) ? 'selected' : ''; ?>>Mei</option>
+                        <option value="6" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 6) ? 'selected' : ''; ?>>Juni</option>
+                        <option value="7" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 7) ? 'selected' : ''; ?>>Juli</option>
+                        <option value="8" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 8) ? 'selected' : ''; ?>>Agustus</option>
+                        <option value="9" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 9) ? 'selected' : ''; ?>>September</option>
+                        <option value="10" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 10) ? 'selected' : ''; ?>>Oktober</option>
+                        <option value="11" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 11) ? 'selected' : ''; ?>>November</option>
+                        <option value="12" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 12) ? 'selected' : ''; ?>>Desember</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Tampilkan</button>
+            </form>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead class="thead-dark">

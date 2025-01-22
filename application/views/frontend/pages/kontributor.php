@@ -68,7 +68,79 @@
 	</div>
 </section>
 
+<<<<<<< HEAD
 <!-- Modal Sukses -->
+=======
+<section class="contact-us" id="contact">
+	<div class="container">
+		<div class="row">
+			<div class="contact-form col-md-12 ">
+				<?php if (!$this->session->userdata('user_id')): ?>
+					<!-- Alert Bootstrap -->
+					<div class="alert alert-warning alert-dismissible fade show" role="alert">
+						<strong>Perhatian!</strong> Anda harus login terlebih dahulu untuk menambahkan media berita.
+					</div>
+				<?php else: ?>
+					<!-- Form hanya muncul jika session user_id ada -->
+					<form action="<?= base_url('kontributor/create'); ?>" method="post" enctype="multipart/form-data">
+						<div class="form-group">
+							<label for="nama">Nama</label>
+							<input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan nama media" required>
+						</div>
+
+						<div class="form-group">
+							<label for="judul">Judul</label>
+							<input type="text" class="form-control" name="judul" id="judul" placeholder="Masukkan judul media" required>
+						</div>
+
+						<div class="form-group">
+							<label for="url">URL</label>
+							<input type="text" class="form-control" name="url" id="url" placeholder="Masukkan URL media" required>
+						</div>
+
+						<div class="form-group">
+							<label for="id_kategori">Kategori</label>
+							<select class="form-control" name="id_kategori" id="id_kategori" required>
+								<option value="">Pilih Kategori</option>
+								<?php foreach ($kategori as $kat): ?>
+									<option value="<?= $kat->id ?>"><?= $kat->nama_kategori ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="gambar">Upload Gambar</label>
+							<input type="file" class="form-control-file" name="gambar" id="gambar" accept="image/*" required>
+						</div>
+
+						<div class="form-group">
+							<label for="deskripsi">Deskripsi</label>
+							<textarea class="form-control" name="deskripsi" id="deskripsi" rows="4" placeholder="Masukkan deskripsi media"></textarea>
+						</div>
+
+						<a href="<?= base_url('media'); ?>" class="btn btn-secondary">Kembali</a>
+						<button type="submit" class="btn btn-primary">Simpan</button>
+					</form>
+				<?php endif; ?>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+		<?php if ($this->session->flashdata('success')): ?>
+			$('#successModal').modal('show');
+		<?php endif; ?>
+	});
+</script>
+
+<!-- Modal -->
+>>>>>>> 337520d230eaf8ae86791864d502fda0241b9dc2
 <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
