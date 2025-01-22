@@ -11,7 +11,7 @@
             </a>
         </div>
         <div class="card-body">
-            <form method="GET" action="<?= base_url('laporan/index'); ?>">
+            <form class="mb-3" method="GET" action="<?= base_url('laporan/index'); ?>" id="formLaporan">
                 <div class="form-group">
                     <label for="bulan">Pilih Bulan</label>
                     <select class="form-control" name="bulan" id="bulan">
@@ -29,8 +29,10 @@
                         <option value="12" <?= (isset($_GET['bulan']) && $_GET['bulan'] == 12) ? 'selected' : ''; ?>>Desember</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Tampilkan</button>
+                <button type="submit" class="btn btn-primary" name="action" value="tampil">Tampilkan Laporan</button>
+                <button type="submit" class="btn btn-success" name="action" value="cetak">Cetak Laporan</button>
             </form>
+
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead class="thead-dark">
@@ -59,7 +61,6 @@
                                     <td><?= $media['nama_kategori']; ?></td>
                                     <td>
                                         <?php
-                                        // Menampilkan status media dengan badge
                                         if ($media['status'] === 'disetujui') {
                                             echo '<span class="badge badge-success">Disetujui</span>';
                                         } elseif ($media['status'] === 'belum disetujui') {
@@ -69,15 +70,7 @@
                                         }
                                         ?>
                                     </td>
-                                    <td>
-                                        <?php
-                                        // Set Locale untuk bahasa Indonesia
-                                        setlocale(LC_TIME, 'id_ID', 'id_ID.UTF-8');
-
-                                        // Format tanggal menjadi "2 Oktober 2022, 09.40 WIB"
-                                        echo strftime("%e %B %Y, %H.%M WIB", strtotime($media['tanggal']));
-                                        ?>
-                                    </td>
+                                    <td><?= strftime("%e %B %Y, %H.%M WIB", strtotime($media['tanggal'])); ?></td>
                                     <td>
                                         <?php if (!empty($media['gambar'])): ?>
                                             <img src="<?= base_url('uploads/' . $media['gambar']); ?>" alt="Gambar" width="100">

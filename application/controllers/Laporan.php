@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+// Pastikan autoload Composer dipanggil
+require_once FCPATH . 'vendor/autoload.php';
+
+use Dompdf\Dompdf;
+
 class Laporan extends CI_Controller
 {
 
@@ -14,21 +19,59 @@ class Laporan extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Data Media';
+        // Ambil parameter dari GET
+        $bulan = $this->input->get('bulan');
+        $action = $this->input->get('action');
 
-        // Mendapatkan bulan yang dipilih (default bulan 1 jika tidak ada)
-        $bulan = $this->input->get('bulan', TRUE) ?? 1;
+        // Inisialisasi data
+        $data['medias'] = [];
 
-        // Mengambil data media berdasarkan bulan yang dipilih
-        $data['medias'] = $this->MediaModel->get_media_by_month($bulan);
+        // Jika bulan dipilih, ambil data sesuai bulan
+        if ($bulan) {
+            $data['medias'] = $this->MediaModel->get_media_by_month($bulan);
+        }
 
-        // Mendapatkan nama bulan
-        $data['bulan'] = $this->MediaModel->get_month_name($bulan);
-
-        // Menampilkan data
+        // Tampilkan header dan footer sebelum melakukan tindakan
         $this->load->view('backend/partials/header', $data);
         $this->load->view('backend/laporan/view', $data);
         $this->load->view('backend/partials/footer');
+
+        // Tindakan berdasarkan parameter 'action'
+        if ($action === 'cetak') {
+            // Data untuk laporan berdasarkan bulan
+            $data['title'] = "Laporan Media Trend Bulan " . $this->get_nama_bulan($bulan);
+            $data['media'] = $this->MediaModel->get_media_by_month($bulan);
+
+            $html = $this->load->view('backend/pdf/laporan_trend_bulan', $data, true);
+
+            // Inisialisasi Dompdf
+            $dompdf = new Dompdf();
+            $dompdf->loadHtml($html);
+            $dompdf->setPaper('A4', 'landscape');
+            $dompdf->render();
+            $dompdf->stream("laporan_media_bulan_$bulan.pdf", ['Attachment' => 0]);
+        }
+    }
+
+    // Fungsi untuk mendapatkan nama bulan
+    private function get_nama_bulan($bulan)
+    {
+        $nama_bulan = [
+            1 => "Januari",
+            2 => "Februari",
+            3 => "Maret",
+            4 => "April",
+            5 => "Mei",
+            6 => "Juni",
+            7 => "Juli",
+            8 => "Agustus",
+            9 => "September",
+            10 => "Oktober",
+            11 => "November",
+            12 => "Desember",
+        ];
+
+        return $nama_bulan[$bulan] ?? "Tidak Diketahui";
     }
 
     public function add()
