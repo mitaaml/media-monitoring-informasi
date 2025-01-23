@@ -164,19 +164,21 @@ class MediaModel extends CI_Model
         $query = $this->db->get('media');
         return $query->result();
     }
-    
-    // Fungsi untuk mengambil data berdasarkan bulan
+
+    // Fungsi untuk mengambil data berdasarkan bulan dengan urutan view terbanyak
     public function get_media_by_month($bulan)
     {
-        $this->db->select('*');
+        $this->db->select('media.*, kategori.nama_kategori');
         $this->db->from('media');
-        $this->db->where('MONTH(tanggal)', $bulan);
+        $this->db->join('kategori', 'kategori.id = media.id_kategori', 'left');
+        $this->db->where('MONTH(media.tanggal)', $bulan);
+        $this->db->order_by('media.view', 'DESC');
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
-            return $query->result_array(); // Mengembalikan hasil sebagai array
+            return $query->result_array();
         } else {
-            return []; // Tidak ada data
+            return [];
         }
     }
 

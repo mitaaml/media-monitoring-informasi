@@ -37,40 +37,58 @@ class Cetak extends CI_Controller
         $dompdf->stream("laporan_media.pdf", array("Attachment" => 0));
     }
 
-    public function laporanPerPeriode($periode = null)
-{
-    // Get the start and end date from the form input (if provided)
-    $start_date = $this->input->get('start_date');
-    $end_date = $this->input->get('end_date');
-    
-    // Data untuk laporan
-    $data['title'] = "Laporan Media";
-    
-    // Ambil data berdasarkan periode atau berdasarkan tanggal yang dipilih
-    if ($periode == 'minggu') {
-        $data['media'] = $this->MediaModel->getMediaByWeek();
-    } elseif ($periode == 'bulan') {
-        $data['media'] = $this->MediaModel->getMediaByMonth();
-    } elseif ($periode == 'tahun') {
-        $data['media'] = $this->MediaModel->getMediaByYear();
-    } elseif ($start_date && $end_date) {
-        $data['media'] = $this->MediaModel->getMediaByDateRange($start_date, $end_date);
+    public function laporan_per_bulan()
+    {
+        // Ambil bulan dari parameter GET
+        $bulan = $this->input->get('bulan');
+
+        if (!$bulan) {
+            show_error("Bulan tidak dipilih!", 400);
+        }
+
+        // Data untuk laporan berdasarkan bulan
+        $data['title'] = "Laporan Media Trend Bulan " . $this->get_nama_bulan($bulan);
+        $data['media'] = $this->MediaModel->get_media_by_month($bulan);
+
+        if (empty($data['media'])) {
+            show_error("Tidak ada data media untuk bulan yang dipilih.", 404);
+        }
+
+        // Load view sebagai HTML
+        $html = $this->load->view('backend/pdf/laporan_trend_bulan', $data, true);
+
+        // Inisialisasi Dompdf
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+
+        // Set ukuran dan orientasi kertas
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render PDF
+        $dompdf->render();
+
+        // Output PDF ke browser
+        $dompdf->stream("laporan_trend_media.pdf", array("Attachment" => 0));
     }
 
-    // Load view sebagai HTML
-    $html = $this->load->view('backend/pdf/laporan', $data, true);
+    // Fungsi untuk mendapatkan nama bulan
+    private function get_nama_bulan($bulan)
+    {
+        $nama_bulan = [
+            1 => "Januari",
+            2 => "Februari",
+            3 => "Maret",
+            4 => "April",
+            5 => "Mei",
+            6 => "Juni",
+            7 => "Juli",
+            8 => "Agustus",
+            9 => "September",
+            10 => "Oktober",
+            11 => "November",
+            12 => "Desember",
+        ];
 
-    // Inisialisasi Dompdf
-    $dompdf = new Dompdf();
-    $dompdf->loadHtml($html);
-
-    // Set ukuran dan orientasi kertas
-    $dompdf->setPaper('A4', 'landscape');
-
-    // Render PDF
-    $dompdf->render();
-
-    // Output PDF ke browser
-    $dompdf->stream("laporan_media_{$periode}.pdf", array("Attachment" => 0));
-}
+        return $nama_bulan[$bulan] ?? "Tidak Diketahui";
+    }
 }
