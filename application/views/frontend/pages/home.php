@@ -55,27 +55,70 @@
 		<div class="row justify-content-center">
 			<div class="col-lg-6">
 				<div class="title text-center">
-					<h2>Sistem Media Monitoring</h2>
-					<p>Solusi real-time untuk memantau informasi terkait ketenagakerjaan di Kota Semarang.</p>
-					<div class="border"></div>
+					<h2 class="mb-3">Sistem Media Monitoring</h2>
+					<p class="text-muted">Solusi real-time untuk memantau informasi terkait ketenagakerjaan di Kota Semarang.</p>
+					<div class="border mb-4"></div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row align-items-center">
 			<div class="col-md-6 mb-4 mb-md-0">
-				<img loading="lazy" src="<?= base_url('assets/images/about/mediamonitoring.jpg') ?>"class="img-fluid" alt="Media Monitoring">
+				<div class="image-wrapper shadow rounded">
+					<img loading="lazy" src="<?= base_url('assets/images/about/mediamonitoring.jpg') ?>" class="img-fluid rounded" alt="Media Monitoring">
+				</div>
 			</div>
 			<div class="col-md-6">
 				<ul class="checklist">
-					<li>Memantau berita ketenagakerjaan terkini.</li>
-					<li>Analisis data untuk pengambilan keputusan strategis.</li>
-					<li>Akses informasi dari berbagai media secara real-time.</li>
+					<li><i class="fas fa-check-circle text-primary me-2"></i> Memantau berita ketenagakerjaan terkini.</li>
+					<li><i class="fas fa-check-circle text-primary me-2"></i> Analisis data untuk pengambilan keputusan strategis.</li>
+					<li><i class="fas fa-check-circle text-primary me-2"></i> Akses informasi dari berbagai media secara real-time.</li>
+					<li><i class="fas fa-check-circle text-primary me-2"></i> Memberikan notifikasi berita penting kepada pengguna.</li>
+					<li><i class="fas fa-check-circle text-primary me-2"></i> Menyajikan laporan statistik tren informasi ketenagakerjaan.</li>
+					<li><i class="fas fa-check-circle text-primary me-2"></i> Mengelompokkan berita berdasarkan kategori atau sumber media.</li>
+					<li><i class="fas fa-check-circle text-primary me-2"></i> Mendukung integrasi dengan platform media sosial untuk distribusi informasi.</li>
 				</ul>
-				<a href="tentang.html" class="btn btn-main mt-20">Pelajari Lebih Lanjut</a>
 			</div>
 		</div>
 	</div>
 </section>
+
+<style>
+.about-2 .title h2 {
+	font-size: 2rem;
+	color: #333;
+	font-weight: bold;
+}
+.about-2 .title p {
+	font-size: 1rem;
+	color: #666;
+}
+.about-2 .border {
+	width: 50px;
+	height: 3px;
+	background-color: #007bff;
+	margin: 0 auto;
+}
+.about-2 .image-wrapper {
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	overflow: hidden;
+}
+.about-2 .checklist {
+	list-style: none;
+	padding-left: 0;
+}
+.about-2 .checklist li {
+	font-size: 1rem;
+	margin-bottom: 10px;
+	color: #444;
+	display: flex;
+	align-items: center;
+}
+.about-2 .checklist li i {
+	font-size: 1.2rem;
+}
+</style>
+
 
 <!-- Bagian Informasi Terkini -->
 <section class="blog" id="berita">
@@ -90,31 +133,63 @@
 			</div>
 		</div>
 		<div class="row">
-    <?php if (!empty($artikel)): ?>
-        <?php foreach ($artikel as $item): ?>
-            <article class="col-lg-4 col-md-6">
-                <div class="post-item">
-                    <div class="media-wrapper">
-                        <!-- Gambar artikel -->
-                        <img loading="lazy" src="<?= base_url('uploads/' . ($item['gambar'] ?: 'default.jpg')); ?>" alt="<?= $item['judul']; ?>" class="img-fluid">
-                    </div>
-                    <div class="content">
-                        <!-- Judul artikel -->
-                        <h3><?= $item['judul']; ?></h3>
-                        <!-- Deskripsi artikel -->
-                        <p>view : <?= $item['view']; ?></p>
-                        <p><?= substr($item['deskripsi'], 0, 150); ?>...</p>
-                        <a class="btn btn-main" href="<?= base_url('home/update_view/' . $item['id']); ?>" target="_blank">Baca Selengkapnya</a>
-                    </div>
-                </div>
-            </article>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>Belum ada informasi terbaru.</p>
-    <?php endif; ?>
-</div>
+			<?php if (!empty($artikel)): ?>
+				<?php foreach ($artikel as $item): ?>
+					<article class="col-lg-4 col-md-6 d-flex align-items-stretch">
+						<div class="post-item shadow-sm rounded p-3">
+							<div class="media-wrapper mb-2">
+								<!-- Gambar artikel -->
+								<img loading="lazy" src="<?= base_url('uploads/' . ($item['gambar'] ?: 'default.jpg')); ?>" alt="<?= $item['judul']; ?>" class="img-fluid rounded" style="width: 100%; height: 180px; object-fit: cover;">
+							</div>
+							<div class="content">
+								<!-- Judul artikel -->
+								<h3 class="mb-2" style="font-size: 1rem; font-weight: bold;"><?= $item['judul']; ?></h3>
+								<!-- Deskripsi artikel -->
+								<p class="text-muted mb-1" style="font-size: 0.8rem;">View: <?= $item['view']; ?></p>
+								<p style="font-size: 0.8rem;"><?= substr($item['deskripsi'], 0, 80); ?>...</p>
+								<a class="btn btn-main mt-2" href="<?= base_url('home/update_view/' . $item['id']); ?>" target="_blank" style="font-size: 0.8rem;">Baca Selengkapnya</a>
+							</div>
+						</div>
+					</article>
+				<?php endforeach; ?>
+			<?php else: ?>
+				<div class="col-12">
+					<p class="text-center">Belum ada informasi terbaru.</p>
+				</div>
+			<?php endif; ?>
+		</div>
 	</div>
 </section>
+
+<style>
+	.blog .post-item {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		height: auto; /* Tinggi total kotak lebih rendah */
+		background-color: #fff;
+		border: 1px solid #ddd;
+		margin-bottom: 20px;
+	}
+	.blog .media-wrapper img {
+		max-height: 180px; /* Tinggi gambar lebih rendah */
+		object-fit: cover;
+		border-radius: 10px;
+	}
+	.blog .btn-main {
+		background-color: #007bff;
+		color: #fff;
+		border-radius: 20px;
+		padding: 6px 14px;
+		text-decoration: none;
+		font-size: 0.8rem;
+	}
+	.blog .btn-main:hover {
+		background-color: #0056b3;
+		color: #fff;
+	}
+</style>
+
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
