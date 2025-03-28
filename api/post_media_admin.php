@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $deskripsi = isset($_POST['deskripsi']) ? $conn->real_escape_string($_POST['deskripsi']) : null;
 
     // Pastikan direktori upload ada dan izin menulis
-    $upload_dir = "disnaker-monitoring/uploads/";
+    $upload_dir = "../uploads/";
 
     // Cek direktori absolut untuk debugging
     $absolute_path = $_SERVER['DOCUMENT_ROOT'] . '/' . $upload_dir;

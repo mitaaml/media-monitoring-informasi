@@ -3,7 +3,7 @@ require_once 'connection.php';
 header("Content-Type: application/json");
 
 // Query SELECT untuk mengambil data media
-$sql = "SELECT * FROM media ORDER BY media.id DESC";
+$sql = "SELECT * FROM media ORDER BY media.view DESC";
 
 $result = $conn->query($sql);
 
